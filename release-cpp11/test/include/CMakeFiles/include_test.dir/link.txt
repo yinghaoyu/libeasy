@@ -1,1 +1,0 @@
-/usr/bin/cc -O3 -DNDEBUG  -rdynamic CMakeFiles/include_test.dir/include_test.c.o CMakeFiles/include_test_base.dir/easy_atomic_test.c.o CMakeFiles/include_test_base.dir/easy_list_test.c.o  -o include_test  -lpthread -lm -ldl ../../src/libeasy.a -lpthread -lm -l:libssl.a -l:libcrypto.a 

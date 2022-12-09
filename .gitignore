@@ -1,3 +1,3 @@
 compile_commands.json
 .clangd/
-.release-cpp11/
+release-cpp11/

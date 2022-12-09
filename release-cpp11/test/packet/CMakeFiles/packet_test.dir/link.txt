@@ -1,1 +1,0 @@
-/usr/bin/cc -O3 -DNDEBUG  -rdynamic CMakeFiles/packet_test.dir/packet_test.c.o CMakeFiles/packet_test_base.dir/easy_http_handler_test.c.o  -o packet_test  -lpthread -lm -ldl ../../src/libeasy.a -lpthread -lm -l:libssl.a -l:libcrypto.a 

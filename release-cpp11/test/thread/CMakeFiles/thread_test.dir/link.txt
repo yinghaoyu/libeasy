@@ -1,1 +1,0 @@
-/usr/bin/cc -O3 -DNDEBUG  -rdynamic CMakeFiles/thread_test.dir/thread_test.c.o CMakeFiles/thread_test_base.dir/easy_uthread_test.c.o  -o thread_test  -lpthread -lm -ldl ../../src/libeasy.a -lpthread -lm -l:libssl.a -l:libcrypto.a 

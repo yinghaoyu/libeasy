@@ -1,1 +1,0 @@
-/usr/bin/cc -O3 -DNDEBUG  -rdynamic CMakeFiles/memory_test.dir/memory_test.c.o CMakeFiles/memory_test_base.dir/easy_mem_page_test.c.o CMakeFiles/memory_test_base.dir/easy_mem_pool_test.c.o CMakeFiles/memory_test_base.dir/easy_mem_slab_test.c.o  -o memory_test  -lpthread -lm -ldl ../../src/libeasy.a -lpthread -lm -l:libssl.a -l:libcrypto.a 
