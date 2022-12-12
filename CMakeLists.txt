@@ -44,6 +44,7 @@ target_compile_options(easy_base
 target_link_libraries(easy_base
   INTERFACE
   -lpthread -lm -l:libssl.a -l:libcrypto.a
+  ${CMAKE_DL_LIBS}
 )
 
 
