@@ -10,6 +10,7 @@
  * See the Mulan PubL v2 for more details.
  */
 
+#include <openssl/bn.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <pthread.h>
@@ -1732,16 +1733,18 @@ static int easy_ssl_dhparam(easy_ssl_ctx_t *ssl, char *file)
             return EASY_ERROR;
         }
 
-        dh->p = BN_bin2bn(dh1024_p, sizeof(dh1024_p), NULL);
-        dh->g = BN_bin2bn(dh1024_g, sizeof(dh1024_g), NULL);
+      BIGNUM *p = BN_bin2bn(dh1024_p, sizeof(dh1024_p), NULL);
+      BIGNUM *g = BN_bin2bn(dh1024_g, sizeof(dh1024_g), NULL);
 
-        if (NULL == dh->p || NULL == dh->g) {
+        if (NULL == p || NULL == g) {
             easy_ssl_error(EASY_LOG_ERROR, "BN_bin2bn() failed");
             DH_free(dh);
             return EASY_ERROR;
         }
         SSL_CTX_set_tmp_dh(ssl->ctx, dh);
 
+        BN_free(p);
+        BN_free(g);
         DH_free(dh);
 
         return EASY_OK;
