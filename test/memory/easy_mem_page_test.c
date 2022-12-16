@@ -24,20 +24,20 @@ TEST(easy_mem_page, zone_create)
     easy_mem_zone_t         *zone;
     int                     i, size, cnt;
 
-    // 1.
+    // 1. arg <= 128M 成功
     zone = easy_mem_zone_create(zone_size / 2);
     EXPECT_TRUE(zone != NULL);
     size = (1 << zone->max_order) * EASY_MEM_PAGE_SIZE;
     EXPECT_EQ(size, zone_size / 2);
     easy_mem_zone_destroy(zone);
 
-    // 2.
+    // 2. arg > 128M ，只能得到最大 128M
     zone = easy_mem_zone_create(zone_size * 4);
     EXPECT_TRUE(zone != NULL);
     size = (1 << zone->max_order) * EASY_MEM_PAGE_SIZE;
     EXPECT_EQ(size, zone_size);
 
-    // 3.
+    // 3. zone所有area的free_list都为空
     cnt = 0;
 
     for(i = 0; i <= (int)zone->max_order; i++) {
@@ -57,7 +57,7 @@ TEST(easy_mem_page, alloc_pages)
 
     zone = easy_mem_zone_create(zone_size);
 
-    // 1.
+    // 1. zone分配 (1 << i) * page(64K) 的块
     cnt = 0;
 
     for(i = 0; i < zone->max_order; i++) {

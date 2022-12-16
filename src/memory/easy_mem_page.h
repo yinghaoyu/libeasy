@@ -18,8 +18,24 @@
 #include <easy_atomic.h>
 
 /**
- * 简单内存分配器
+ * Buddy内存分配器
  */
+//       ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ↑
+//       ↓   mem_area                              ↑
+//       ↓ →   0      → page → page → ... → page → →  2^0 pages
+//             1      → page → page → ... → page      2^1 pages
+//             2      → page → page → ... → page      2^2 pages
+//             3      → page → page → ... → page      2^3 pages
+//             4      → page → page → ... → page      2^4 pages
+//             5      → page → page → ... → page      2^5 pages
+//             6      → page → page → ... → page      2^6 pages
+//             7      → page → page → ... → page      2^7 pages
+//             8      → page → page → ... → page      2^8 pages
+//             9      → page → page → ... → page      2^9 pages
+//             10     → page → page → ... → page      2^10 pages
+//             11     → page → page → ... → page      2^11 pages
+// MAX_ORDER   12     → page → page → ... → page      2^12 pages
+// Buddy算法运用了任何正整数都可以由2^n的和组成
 EASY_CPP_START
 
 #define EASY_MEM_PAGE_SHIFT     16
@@ -41,10 +57,13 @@ struct easy_mem_area_t {
 
 struct easy_mem_zone_t {
     unsigned char           *mem_start, *mem_last, *mem_end;
-    easy_mem_area_t         area[EASY_MEM_MAX_ORDER];
-    uint32_t                max_order;
-    int                     free_pages;
+    easy_mem_area_t         area[EASY_MEM_MAX_ORDER];         // 空闲块区域
+    uint32_t                max_order;                        // mem_area最大层数
+    int                     free_pages;                       // 全局空闲page数
     unsigned char           *curr, *curr_end;
+    // 柔性数组，每个page用 8 bits
+    // 高 4 bits 标记分配状态，1000 表示已分配，0000 表示未分配
+    // 低 4 bits 标记当前所属的mem_area层order
     unsigned char           page_flags[0];
 };
 
