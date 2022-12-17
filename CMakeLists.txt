@@ -47,6 +47,8 @@ target_link_libraries(easy_base
   ${CMAKE_DL_LIBS}
 )
 
+set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin) # 指定bin路径
+set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib) # 指定lib路径
 
 target_compile_features(easy_base INTERFACE cxx_std_11)
 
